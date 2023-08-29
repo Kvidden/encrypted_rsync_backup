@@ -1,0 +1,54 @@
+A little python script I wrote when I wanted to port the bash version of this script I wrote during school 2021.
+Comments in the code are in Swedish for me to look back later on.
+Variables are mostly in English but sometimes in Swedish, afterall wrote it since I use this, well the bash version up until now.
+
+Files needed:
+
+Create a backuplist.txt if it does not come with the pull.
+Fill it up with files and/or directories to backup.
+Example:
+/path/to/a/directory
+/or/path/to/a/file.txt
+/or/whatever/you/want/to/add/in/the/file
+
+Create .env file if it does not come with the pull.
+It´s a JSON fileformat so it will open as a dict in the script.
+Current version looks something like this:
+{
+        "SSHKey": "/home/<user>/.ssh/<key>",
+        "SSHUser": "<user>",
+        "BackupServers": ["<Name not used now>","<2nd backupserver?>"],
+        "Hosts": ["<host or ip>","<2nd host?>"],
+        "Ports": [<port>,<2n host port>],
+        "CurrentServer": "<Servername>",
+        "EncryptionKey": "your-base64-encoded-key-as-string",
+        "BackupDir": "/where/to/backup"
+}
+You can add as many backupserver as wanted, and the BackupServers key: value is not currently used but I added it if I wanted to use it later on.
+
+To make a encryptionkey for the Fernet cryptography library you can use this:
+
+from cryptography.fernet import Fernet
+import base64
+print(base64.b64encode(Fernet.generate_key()).decode())
+
+This will give you a base64 encoded string to add in your .env file.
+This because you can´t get a bytes object from the .env file when reading in the json file as a dict.
+The base64 string will get decoded inside the script to be used correctly later on.
+
+
+How to use:
+
+If you fixed the files above inside the same directory as main.py file the script should just run and working as intended.
+If you want to decrypt a encrypted file I added a function for that as well.
+In that case you need to pass the argument decrypt while running the script, ./main.py decrypt
+The script will list all files in the backup directory and it´s just to write the name of the file and the script decrypt and save the tar.gz file in the backup directory.
+You can also pass the filename as an argument directly and skip the question from the scryp like ./main.py decrypt 2023-08-27-Server.tar.gz.enc
+If the file passed as an argument does not exist it will list and ask you as above.
+
+The script also deletes all files in the backup directory that is older then 4 weeks, so it does not fill up the disk.
+Of course that could be changed as one would like to have it.
+
+
+Any thoughts, tips or tricks is very welcome.
+Or if you want to use it and edit it to work for you as everything is setup for my useage of the script.

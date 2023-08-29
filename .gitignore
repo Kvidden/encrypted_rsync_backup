@@ -1,0 +1,3 @@
+# skippa alla saker under denna katalogen
+.env
+backuplist.txt
