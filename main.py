@@ -70,7 +70,7 @@ def tar_and_encrypt(encrypted_tarfile, key):
     with tarfile.open(fileobj=tarfile_buffer, mode='w:gz') as tar:
         for BackupPart in BackupList:
             # ifall Zabbix-Server finns med i BackupPart strängen så kör det under
-            if "Zabbix-Server" in BackupPart:
+            if "zabbix-server" in BackupPart:
                 # skapar en sökväg där zabbix sql dump skall hamna, vilket är i katalogen som backas upp
                 zabbix_sql = os.path.join(BackupPart, "zabbix.sql")
                 # tar ut sql dump ur docker och placerar i Zabbix-Server
