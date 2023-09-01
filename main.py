@@ -98,6 +98,12 @@ def tar_and_encrypt(encrypted_tarfile, key):
     # kollar ifall dump av databasen finns
 
 def main():
+    if not os.path.exists(os.path.join(main_directory, ".env")):
+        print(".env filen saknas och behöver skapas och fyllas i, läs README för mer info.")
+        exit(0)
+    if not os.path.exists(os.path.join(main_directory, "backuplist.txt")):
+        print("backuplist.txt filen saknas och behöver skapas och fyllas i, läs README för mer info.")
+        exit(0)
     # öppnar .env filen och läser in datan som sedan läses in som json i en dict
     with open(os.path.join(main_directory, ".env"), "r", encoding='utf-8') as file:
         enviroment_data = json.load(file)
