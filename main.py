@@ -79,9 +79,9 @@ def tar_and_encrypt(encrypted_tarfile, key):
             # och inget stannar upp, d.v.s if true tar.add
             if os.path.exists(BackupPart):
                 tar.add(BackupPart)
-    if os.path.exists(os.path.join(BackupPart, "zabbix.sql")):
-        # finns dump av databasen så ta bort den
-        os.remove(os.path.join(BackupPart, "zabbix.sql"))
+            if os.path.exists(os.path.join(BackupPart, "zabbix.sql")):
+            # finns dump av databasen så ta bort den
+                os.remove(os.path.join(BackupPart, "zabbix.sql"))
     # skapar ett fernet objekt av nyckeln som är i byte som typ
     fernet_object = Fernet(key)
     # skapar en krypterad tarfil av datan i bufferen som skapades förut
